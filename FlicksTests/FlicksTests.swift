@@ -24,6 +24,10 @@ class FlicksTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let moviesLoader = MoviesLoader()
+        let keyString = moviesLoader.readApiKey()
+        print(keyString!)
+        XCTAssertNotNil(keyString)
     }
     
     func testPerformanceExample() {
