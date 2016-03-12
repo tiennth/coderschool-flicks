@@ -13,7 +13,6 @@ class NowPlayingVC: BaseVC {
     
     @IBOutlet weak var moviesTable: UITableView!
     @IBOutlet weak var movieCollection: UICollectionView!
-    @IBOutlet weak var searchBar: UISearchBar!
     
     // MessageView and its subviews
     @IBOutlet weak var messageView: UIView!
@@ -21,6 +20,13 @@ class NowPlayingVC: BaseVC {
     @IBOutlet weak var msgViewDescLabel: UILabel!
     
     let segmentedControl = UISegmentedControl()
+    
+    // Navigation bar's buttons
+    var leftBarButton:UIBarButtonItem!
+    var rightBarButton:UIBarButtonItem!
+    var searchBar:UISearchBar!
+    var isSearchBarVisible:Bool = false
+    
     let refreshControl = UIRefreshControl()
     
     var mbLoadingView:MBProgressHUD?
@@ -45,12 +51,27 @@ class NowPlayingVC: BaseVC {
         self.setupRefreshControl()
         
         //
-        self.setupRightBarButton()
+        self.createLeftBarButton()
+        self.createRightBarButton()
+        self.createSearchBarNavigationItem()
+        
+        self.showLeftBarButton(true)
+        self.showRightBarButton(true)
         
         // Load movies data first time
         self.loadMoviesData()
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if self.isSearchBarVisible {
+            self.searchBar.becomeFirstResponder()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -86,7 +107,7 @@ class NowPlayingVC: BaseVC {
     
     private func handleLoadMoviesSucess() {
         self.messageView.hidden = true
-        self.moviesTable.reloadData()
+        self.reloadMoviePresenter()
     }
 
     private func handleLoadMoviesFailed(error:NSError) {
@@ -105,17 +126,64 @@ class NowPlayingVC: BaseVC {
         self.displayMessageInMessageView(title: title, description: description)
     }
     
-    // MARK: - Others
-    private func setupRightBarButton() {
+    // MARK: - Navigation items
+    
+    private func createSearchBarNavigationItem() {
+        self.searchBar = UISearchBar()
+        self.searchBar.showsCancelButton = true
+        self.searchBar.delegate = self
+        searchBar.sizeToFit()
+    }
+    
+    private func createLeftBarButton() {
         self.segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 0, animated: false)
         self.segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 1, animated: false)
         self.segmentedControl.selectedSegmentIndex = 0
         self.segmentedControl.tintColor = UIColor.redColor()
         self.segmentedControl.addTarget(self, action: "segmentControlValueChange:", forControlEvents: .ValueChanged)
         self.segmentedControl.sizeToFit()
-        let rightBarButton = UIBarButtonItem(customView: segmentedControl)
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.leftBarButton = UIBarButtonItem(customView: segmentedControl)
     }
+    
+    private func createRightBarButton() {
+        self.rightBarButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "barButtonSearchClicked:")
+    }
+    
+    private func showLeftBarButton(show:Bool) {
+        if show {
+            self.navigationItem.leftBarButtonItem = self.leftBarButton
+        } else {
+            self.navigationItem.leftBarButtonItem = nil
+        }
+    }
+    
+    private func showRightBarButton(show:Bool) {
+        if show {
+            self.navigationItem.rightBarButtonItem = self.rightBarButton
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    private func showSearchBarOnNavigationBar(show:Bool) {
+        if (show) {
+            self.searchBar.removeFromSuperview()
+            self.navigationItem.titleView = self.searchBar
+            self.searchBar.becomeFirstResponder()
+        } else {
+            self.navigationItem.titleView = nil
+        }
+        self.isSearchBarVisible = show
+    }
+    
+    @objc
+    private func barButtonSearchClicked(sender:UIBarButtonItem) {
+        self.showLeftBarButton(false)
+        self.showRightBarButton(false)
+        self.showSearchBarOnNavigationBar(true)
+    }
+    
+    // MARK: -
     
     @objc
     private func refreshData(sender:UIRefreshControl) {
@@ -130,14 +198,11 @@ class NowPlayingVC: BaseVC {
         if sender.selectedSegmentIndex == 0 {
             self.moviesTable.hidden = false
             self.movieCollection.hidden = true
-            
-            self.moviesTable.reloadData()
         } else if sender.selectedSegmentIndex == 1 {
             self.moviesTable.hidden = true
             self.movieCollection.hidden = false
-            
-            self.movieCollection.reloadData()
         }
+        self.reloadMoviePresenter()
     }
     
     private func displayMessageInMessageView(title title:String, description:String) {
@@ -145,10 +210,20 @@ class NowPlayingVC: BaseVC {
         self.msgViewDescLabel.text = description
     }
     
+    private func reloadMoviePresenter() {
+        if self.moviesTable.hidden {
+            self.movieCollection.reloadData()
+        }
+        if self.movieCollection.hidden {
+            self.moviesTable.reloadData()
+        }
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
         var indexPath:NSIndexPath?
 
         if segue.identifier == "collection" {
@@ -265,18 +340,22 @@ extension NowPlayingVC: UISearchBarDelegate {
                 return false
             })
         }
-        self.moviesTable.reloadData()
+        self.reloadMoviePresenter()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         // Show all movie
         searchBar.text = ""
         self.filteredData = self.moviesData
-        self.moviesTable.reloadData()
+        self.reloadMoviePresenter()
         
         // Don't focus on searchbar any more
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+        
+        self.showLeftBarButton(true)
+        self.showRightBarButton(true)
+        self.showSearchBarOnNavigationBar(false)
     }
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
