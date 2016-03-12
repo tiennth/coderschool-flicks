@@ -14,6 +14,8 @@ class NowPlayingVC: BaseVC {
     @IBOutlet weak var moviesTable: UITableView!
     @IBOutlet weak var movieCollection: UICollectionView!
     
+    @IBOutlet weak var tryAgainButton: UIButton!
+    @IBOutlet weak var tryAgainContainerView: UIView!
     // MessageView and its subviews
     @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var msgViewTitleLabel: UILabel!
@@ -52,8 +54,8 @@ class NowPlayingVC: BaseVC {
         self.movieCollection.dataSource = self
         self.movieCollection.delegate = self
         
-        // Setup refresh control
-        self.setupRefreshControl()
+        self.tryAgainButton.imageView?.contentMode = .ScaleAspectFit
+        self.tryAgainButton.addTarget(self, action: "refreshData:", forControlEvents: .TouchUpInside)
         
         //
         self.createLeftBarButton()
@@ -62,6 +64,9 @@ class NowPlayingVC: BaseVC {
         
         self.showLeftBarButton(true)
         self.showRightBarButton(true)
+        
+        // Setup refresh control
+        self.setupRefreshControl()
         
         // Load movies data first time
         self.loadMoviesData()
@@ -86,7 +91,7 @@ class NowPlayingVC: BaseVC {
         refreshControl.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
         collectionViewRefreshControl.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
         self.moviesTable.insertSubview(refreshControl, atIndex: 0)
-        self.movieCollection.insertSubview(refreshControl, atIndex: 0)
+        self.movieCollection.insertSubview(collectionViewRefreshControl, atIndex: 0)
     }
     
     // MARK: - API call and handling
@@ -114,6 +119,7 @@ class NowPlayingVC: BaseVC {
     
     private func handleLoadMoviesSucess() {
         self.messageView.hidden = true
+        self.tryAgainContainerView.hidden = true
         self.navigationItem.rightBarButtonItem?.enabled = true
         self.navigationItem.leftBarButtonItem?.enabled = true
         self.reloadMoviePresenter()
@@ -122,6 +128,7 @@ class NowPlayingVC: BaseVC {
     private func handleLoadMoviesFailed(error:NSError) {
 //        print("Get nowplaying movies failed \(error)")
         self.messageView.hidden = false
+        self.tryAgainContainerView.hidden = false
         self.navigationItem.rightBarButtonItem?.enabled = false
         self.navigationItem.leftBarButtonItem?.enabled = false
         var title = ""
@@ -367,7 +374,7 @@ extension NowPlayingVC: UISearchBarDelegate {
         self.showLeftBarButton(true)
         self.showRightBarButton(true)
         self.showSearchBarOnNavigationBar(false)
-        self.movieCollection.insertSubview(refreshControl, atIndex: 0)
+        self.movieCollection.insertSubview(collectionViewRefreshControl, atIndex: 0)
         self.moviesTable.insertSubview(refreshControl, atIndex: 0)
     }
     

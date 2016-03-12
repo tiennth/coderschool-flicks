@@ -149,6 +149,26 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1R-kD-4gW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNt-sn-9De">
+                                        <rect key="frame" x="108.5" y="227" width="159" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="PgW-Cg-6dK"/>
+                                            <constraint firstAttribute="width" constant="159" id="pRW-2J-etL"/>
+                                        </constraints>
+                                        <state key="normal" image="reload">
+                                            <color key="titleColor" red="0.80392156859999997" green="0.21960784310000001" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="hNt-sn-9De" firstAttribute="centerY" secondItem="m1R-kD-4gW" secondAttribute="centerY" id="9pP-oZ-UXc"/>
+                                    <constraint firstItem="hNt-sn-9De" firstAttribute="centerX" secondItem="m1R-kD-4gW" secondAttribute="centerX" id="F57-sQ-06C"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMZ-fu-HEO">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
@@ -201,14 +221,18 @@
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YsW-LI-hmv" secondAttribute="bottom" id="0K3-Wu-M2W"/>
                             <constraint firstItem="fqA-Xx-sHh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="13I-So-uLD"/>
+                            <constraint firstItem="m1R-kD-4gW" firstAttribute="leading" secondItem="YsW-LI-hmv" secondAttribute="leading" id="1Be-ic-pH5"/>
                             <constraint firstAttribute="trailing" secondItem="YsW-LI-hmv" secondAttribute="trailing" id="20v-Sb-yMM"/>
+                            <constraint firstItem="m1R-kD-4gW" firstAttribute="top" secondItem="YsW-LI-hmv" secondAttribute="top" id="9Y3-5s-POq"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fqA-Xx-sHh" secondAttribute="bottom" id="EcV-e2-H0U"/>
                             <constraint firstItem="gMZ-fu-HEO" firstAttribute="trailing" secondItem="YsW-LI-hmv" secondAttribute="trailing" id="T0j-xo-oI3"/>
                             <constraint firstAttribute="trailing" secondItem="fqA-Xx-sHh" secondAttribute="trailing" id="WZf-g8-xVo"/>
                             <constraint firstItem="YsW-LI-hmv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Z5z-II-CPu"/>
+                            <constraint firstItem="m1R-kD-4gW" firstAttribute="bottom" secondItem="YsW-LI-hmv" secondAttribute="bottom" id="aEc-Iq-Ip5"/>
                             <constraint firstItem="fqA-Xx-sHh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cAi-g2-ONN"/>
                             <constraint firstItem="YsW-LI-hmv" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="h2z-dN-ui9"/>
                             <constraint firstItem="gMZ-fu-HEO" firstAttribute="leading" secondItem="YsW-LI-hmv" secondAttribute="leading" id="knC-10-o5T"/>
+                            <constraint firstItem="m1R-kD-4gW" firstAttribute="trailing" secondItem="YsW-LI-hmv" secondAttribute="trailing" id="pgB-ge-V1E"/>
                             <constraint firstAttribute="bottom" secondItem="YsW-LI-hmv" secondAttribute="bottom" id="psm-i4-fPg"/>
                             <constraint firstItem="YsW-LI-hmv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="q3v-p5-hgf"/>
                             <constraint firstItem="gMZ-fu-HEO" firstAttribute="top" secondItem="YsW-LI-hmv" secondAttribute="top" id="tgi-Ix-yNG"/>
@@ -229,6 +253,8 @@
                         <outlet property="moviesTable" destination="YsW-LI-hmv" id="Her-nh-dX3"/>
                         <outlet property="msgViewDescLabel" destination="FlX-Jg-Ao2" id="bP6-EW-WsR"/>
                         <outlet property="msgViewTitleLabel" destination="Let-gB-ujv" id="0x7-Dr-pCq"/>
+                        <outlet property="tryAgainButton" destination="hNt-sn-9De" id="rPp-m4-Z9i"/>
+                        <outlet property="tryAgainContainerView" destination="m1R-kD-4gW" id="kdr-Rm-KSG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -425,6 +451,7 @@
         <image name="icon-error" width="36" height="36"/>
         <image name="placeholder" width="186" height="276"/>
         <image name="rating-star" width="16" height="16"/>
+        <image name="reload" width="128" height="128"/>
         <image name="talk" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
