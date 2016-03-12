@@ -14,6 +14,7 @@ extension MovieCell {
         if let posterPath = movie.posterPath {
             self.posterImageView.af_setImageWithURL(NSURL(string: FlickUrlUtils.mediumResolutionPosterPath(posterPath))!, placeholderImage:UIImage(named: "placeholder"))
         }
+        
         self.titleLabel.text = movie.title!
         self.overviewLabel.text = movie.overview!
         

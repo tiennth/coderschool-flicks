@@ -50,53 +50,7 @@ class MovieDetailVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         let overviewRect = self.overviewLabel.frame;
-        print(overviewRect)
         self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, overviewRect.origin.y + overviewRect.size.height + 10)
-    }
-    
-    private func bindMovieToViews() {
-        self.movieTitleLabel.text = movie.title!
-        
-        // Setup release date
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let releaseDate = dateFormatter.dateFromString(self.movie.releaseDate!)
-        dateFormatter.dateStyle = .LongStyle
-        self.releaseDateLabel.text = dateFormatter.stringFromDate(releaseDate!)
-        
-        self.popularityLabel.text = String(format: "%.0f%%", self.movie.popularity!)
-        
-        self.durationLabel.text = "--"
-        // Setup overview text.
-        self.overviewLabel.text = movie.overview!
-        self.overviewLabel.sizeToFit()
-        
-        // Setup poster image.
-        let lowResImageUrl = NSURL(string: FlickUrlUtils.lowResolutionPosterPath(self.movie.posterPath!))!
-        // Do any additional setup after loading the view.
-        self.posterImageView.af_setImageWithURL(lowResImageUrl)
-    }
-    
-    private func showMovieRuntime() {
-        if let runTime = self.movie.runtime {
-            var content:String = ""
-            if runTime == 0 {
-                content.appendContentsOf("0")
-            } else {
-                let hour = runTime / 60
-                let min = runTime % 60
-                
-                if hour > 0 {
-                    content.appendContentsOf("\(hour)h ")
-                }
-                if min > 0 {
-                    content.appendContentsOf("\(min)min")
-                }
-            }
-            self.durationLabel.text = content
-        } else {
-            self.durationLabel.text = "--"
-        }
     }
     
     /*

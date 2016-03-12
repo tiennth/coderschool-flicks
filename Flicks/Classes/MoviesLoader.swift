@@ -64,7 +64,6 @@ class MoviesLoader: NSObject {
         
         Alamofire.request(.GET, self.makeMovieDetailRequestURL(self.apiKey!, movieId: movieId)).responseJSON {
             response in
-            print(response)
             // If something went wrong and Alamofire can handle it
             if let _ = response.result.error {
                 completion(movie: nil, error: response.result.error)
