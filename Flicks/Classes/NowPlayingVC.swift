@@ -28,6 +28,7 @@ class NowPlayingVC: BaseVC {
     var isSearchBarVisible:Bool = false
     
     let refreshControl = UIRefreshControl()
+    let collectionViewRefreshControl = UIRefreshControl()
     
     var mbLoadingView:MBProgressHUD?
     
@@ -83,7 +84,9 @@ class NowPlayingVC: BaseVC {
     
     private func setupRefreshControl() {
         refreshControl.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
+        collectionViewRefreshControl.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
         self.moviesTable.insertSubview(refreshControl, atIndex: 0)
+        self.movieCollection.insertSubview(refreshControl, atIndex: 0)
     }
     
     // MARK: - API call and handling
@@ -111,13 +114,16 @@ class NowPlayingVC: BaseVC {
     
     private func handleLoadMoviesSucess() {
         self.messageView.hidden = true
+        self.navigationItem.rightBarButtonItem?.enabled = true
+        self.navigationItem.leftBarButtonItem?.enabled = true
         self.reloadMoviePresenter()
     }
 
     private func handleLoadMoviesFailed(error:NSError) {
-        print("Get nowplaying movies failed \(error)")
+//        print("Get nowplaying movies failed \(error)")
         self.messageView.hidden = false
-        
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        self.navigationItem.leftBarButtonItem?.enabled = false
         var title = ""
         var description = ""
         if error.domain == NSURLErrorDomain {
@@ -194,8 +200,7 @@ class NowPlayingVC: BaseVC {
     
     @objc
     private func refreshData(sender:UIRefreshControl) {
-        print("Start refresh data")
-        
+        // Only load data if not searching
         self.loadMoviesData()
     }
     
@@ -362,10 +367,14 @@ extension NowPlayingVC: UISearchBarDelegate {
         self.showLeftBarButton(true)
         self.showRightBarButton(true)
         self.showSearchBarOnNavigationBar(false)
+        self.movieCollection.insertSubview(refreshControl, atIndex: 0)
+        self.moviesTable.insertSubview(refreshControl, atIndex: 0)
     }
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         searchBar.setShowsCancelButton(true, animated: true)
+        self.refreshControl.removeFromSuperview()
+        self.collectionViewRefreshControl.removeFromSuperview()
         return true
     }
 }
