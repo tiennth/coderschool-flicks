@@ -1,5 +1,4 @@
 # Project 1 - *Flicks*
-**This project is developing and not finished yet**
 **Flicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
 Time spent: **X** hours spent in total
@@ -9,7 +8,7 @@ Time spent: **X** hours spent in total
 The following **required** functionality is completed:
 
 - [x] User can view a list of movies currently playing in theaters. Poster images load asynchronously.
-- [ ] User can view movie details by tapping on a cell.
+- [x] User can view movie details by tapping on a cell.
 - [x] User sees loading state while waiting for the API.
 - [x] User sees an error message when there is a network error.
 - [x] User can pull to refresh the movie list.
@@ -19,14 +18,14 @@ The following **optional** features are implemented:
 - [x] Add a tab bar for **Now Playing** and **Top Rated** movies.
 - [x] Implement segmented control to switch between list view and grid view.
 - [x] Add a search bar.
-- [ ] All images fade in.
-- [ ] For the large poster, load the low-res image first, switch to high-res when complete.
-- [ ] Customize the highlight and selection effect of the cell.
+- [x] All images fade in.
+- [x] For the large poster, load the low-res image first, switch to high-res when complete.
+- [x] Customize the highlight and selection effect of the cell.
 - [x] Customize the navigation bar.
 
 The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] Show movies in collection view, switchable between collection view and table view
+- [x] In movie detail view, tap on poster image view to toggle visibility of info view
 
 ## Video Walkthrough
 
@@ -37,12 +36,11 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
-
-Describe any challenges encountered while building the app.
+- Dont know why the table view does an unwanted jump when pulling down. 
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [tiennth]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -20,10 +20,8 @@
 		72216C8F1C946D9600BCB786 /* MovieDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72216C8E1C946D9600BCB786 /* MovieDetailPresenter.swift */; };
 		72216C911C94844600BCB786 /* MovieEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72216C901C94844600BCB786 /* MovieEndpoint.swift */; };
 		72926F901C90101F0014BBD2 /* MovieDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72926F8F1C90101F0014BBD2 /* MovieDetailVC.swift */; };
-		729396381C8EBFBE00D2DC6F /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729396371C8EBFBE00D2DC6F /* HomeVC.swift */; };
 		7293963A1C8EC13000D2DC6F /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729396391C8EC13000D2DC6F /* MoviesLoader.swift */; };
 		7293963C1C8EC2F000D2DC6F /* NowPlayingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7293963B1C8EC2F000D2DC6F /* NowPlayingVC.swift */; };
-		7293963E1C8EC30C00D2DC6F /* TopRatedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7293963D1C8EC30C00D2DC6F /* TopRatedVC.swift */; };
 		729396401C8EC33C00D2DC6F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7293963F1C8EC33C00D2DC6F /* BaseVC.swift */; };
 		729396551C8ED8FF00D2DC6F /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729396541C8ED8FF00D2DC6F /* Movie.swift */; };
 		729396571C8EE67900D2DC6F /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729396561C8EE67900D2DC6F /* MovieCell.swift */; };
@@ -384,9 +382,7 @@
 				729396571C8EE67900D2DC6F /* MovieCell.swift in Sources */,
 				729396401C8EC33C00D2DC6F /* BaseVC.swift in Sources */,
 				72926F901C90101F0014BBD2 /* MovieDetailVC.swift in Sources */,
-				729396381C8EBFBE00D2DC6F /* HomeVC.swift in Sources */,
 				7293963C1C8EC2F000D2DC6F /* NowPlayingVC.swift in Sources */,
-				7293963E1C8EC30C00D2DC6F /* TopRatedVC.swift in Sources */,
 				72216C8F1C946D9600BCB786 /* MovieDetailPresenter.swift in Sources */,
 				72B519701C8FDDE300246315 /* FlicksUrlUtils.swift in Sources */,
 				72216C8D1C9426F800BCB786 /* MovieCollectionCell.swift in Sources */,
