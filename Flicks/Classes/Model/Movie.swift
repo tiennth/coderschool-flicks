@@ -36,13 +36,15 @@ class Movie: NSObject {
     var releaseDate:String?
     var genreIds:[Int]?
     var movieId:Int?
-    var originalTitle:String?
-    var originalLanguage:String?
+//    var originalTitle:String?
+//    var originalLanguage:String?
     var title:String?
     var backdropPath:String?
     var voteCount:Int?
     var video:Bool?
     var voteAverage:Float?
+    var popularity:Float?
+    var runtime:Int?
     
     init(json:NSDictionary) {
         self.posterPath = json["poster_path"] as? String
@@ -51,13 +53,15 @@ class Movie: NSObject {
         self.releaseDate = json["release_date"] as? String
         self.genreIds = json["genre_ids"] as? [Int]
         self.movieId = json["id"] as? Int
-        self.originalTitle = json["original_title"] as? String
-        self.originalLanguage = json["original_language"] as? String
+//        self.originalTitle = json["original_title"] as? String
+//        self.originalLanguage = json["original_language"] as? String
         self.title = json["title"] as? String
         self.backdropPath = json["backdrop_path"] as? String
         self.voteCount = json["vote_count"] as? Int
         self.video = json["video"] as? Bool
         self.voteAverage = json["vote_average"] as? Float
+        self.popularity = json["popularity"] as? Float
+        self.runtime = json["runtime"] as? Int
     }
 }
 

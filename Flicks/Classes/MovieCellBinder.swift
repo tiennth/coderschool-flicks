@@ -24,3 +24,12 @@ extension MovieCell {
         }
     }
 }
+
+extension MovieCollectionCell {
+    func bindMovieData(movie:Movie) {
+        if let posterPath = movie.posterPath {
+            self.posterImageView.af_setImageWithURL(NSURL(string: FlickUrlUtils.mediumResolutionPosterPath(posterPath))!, placeholderImage:UIImage(named: "placeholder"))
+        }
+        self.movieTitleLabel.text = movie.title!
+    }
+}

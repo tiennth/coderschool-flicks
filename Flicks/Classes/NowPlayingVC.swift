@@ -25,8 +25,8 @@ class NowPlayingVC: BaseVC {
     
     var mbLoadingView:MBProgressHUD?
     
-    let moviesLoader = MoviesLoader()
-    
+    let moviesLoader = MoviesLoader.sharedInstance;
+
     var moviesData:Array<Movie>?
     var filteredData:Array<Movie>?
     
@@ -37,6 +37,9 @@ class NowPlayingVC: BaseVC {
         // Do any additional setup after loading the view.
         self.moviesTable.dataSource = self
         self.moviesTable.delegate = self
+        
+        self.movieCollection.dataSource = self
+        self.movieCollection.delegate = self
         
         // Setup refresh control
         self.setupRefreshControl()
@@ -127,9 +130,13 @@ class NowPlayingVC: BaseVC {
         if sender.selectedSegmentIndex == 0 {
             self.moviesTable.hidden = false
             self.movieCollection.hidden = true
+            
+            self.moviesTable.reloadData()
         } else if sender.selectedSegmentIndex == 1 {
             self.moviesTable.hidden = true
             self.movieCollection.hidden = false
+            
+            self.movieCollection.reloadData()
         }
     }
     
@@ -142,10 +149,17 @@ class NowPlayingVC: BaseVC {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let cell = sender as! UITableViewCell
-        let indexPath = self.moviesTable.indexPathForCell(cell)
-        let movie = self.filteredData![indexPath!.row]
+        var indexPath:NSIndexPath?
+
+        if segue.identifier == "collection" {
+            let cell = sender as! UICollectionViewCell
+            indexPath = self.movieCollection.indexPathForCell(cell)
+        } else if segue.identifier == "table" {
+            let cell = sender as! UITableViewCell
+            indexPath = self.moviesTable.indexPathForCell(cell)
+        }
         
+        let movie = self.filteredData![indexPath!.row]
         let detailVc = segue.destinationViewController as! MovieDetailVC
         detailVc.movie = movie
     }
@@ -186,6 +200,51 @@ extension NowPlayingVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+extension NowPlayingVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let _ = self.filteredData {
+            return (self.filteredData!.count)
+        } else {
+            return 0
+        }
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("movieCollectionCell", forIndexPath: indexPath) as! MovieCollectionCell
+        cell.bindMovieData(filteredData![indexPath.row])
+        return cell
+    }
+    
+    
+}
+
+extension NowPlayingVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let totalWidth = collectionView.bounds.size.width
+        
+        let spacing = 10
+        let numberItemsPerRow = 3
+        
+        let width = (totalWidth - CGFloat(numberItemsPerRow + 1) * CGFloat(spacing)) / CGFloat(numberItemsPerRow)
+        let height = width * 156 / 103
+        
+        return CGSizeMake(width, height)
     }
 }
 
