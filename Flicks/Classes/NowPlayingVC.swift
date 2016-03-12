@@ -134,6 +134,7 @@ class NowPlayingVC: BaseVC {
     
     private func createSearchBarNavigationItem() {
         self.searchBar = UISearchBar()
+        self.searchBar.tintColor = UIColor.redColor()
         self.searchBar.showsCancelButton = true
         self.searchBar.delegate = self
         searchBar.sizeToFit()
@@ -141,8 +142,8 @@ class NowPlayingVC: BaseVC {
     
     private func createLeftBarButton() {
         let segmentedControl = UISegmentedControl()
-        segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 0, animated: false)
-        segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 1, animated: false)
+        segmentedControl.insertSegmentWithImage(UIImage(named: "list"), atIndex: 0, animated: false)
+        segmentedControl.insertSegmentWithImage(UIImage(named: "grid"), atIndex: 1, animated: false)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.tintColor = UIColor.redColor()
         segmentedControl.addTarget(self, action: "segmentControlValueChange:", forControlEvents: .ValueChanged)
@@ -152,6 +153,7 @@ class NowPlayingVC: BaseVC {
     
     private func createRightBarButton() {
         self.rightBarButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "barButtonSearchClicked:")
+        self.rightBarButton.tintColor = UIColor.redColor()
     }
     
     private func showLeftBarButton(show:Bool) {

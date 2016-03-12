@@ -21,14 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let nowplayingVc = storyBoard.instantiateViewControllerWithIdentifier("movieVC") as! NowPlayingVC
         nowplayingVc.endPoint = MovieEndpoint.NowPlaying
+        nowplayingVc.tabBarItem.image = UIImage(named: "now_playing")
+        nowplayingVc.tabBarItem.title = "Now playing"
         
         let topRatedVc = storyBoard.instantiateViewControllerWithIdentifier("movieVC") as! NowPlayingVC
         topRatedVc.endPoint = MovieEndpoint.TopRated
+        topRatedVc.tabBarItem.image = UIImage(named: "chart")
+        topRatedVc.tabBarItem.title = "Top rated"
         
         let firstNavController = UINavigationController(rootViewController: nowplayingVc)
         let secondNavController = UINavigationController(rootViewController: topRatedVc)
         
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.tintColor = UIColor.redColor()
+
         tabBarController.viewControllers = [firstNavController, secondNavController]
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()

@@ -51,9 +51,7 @@ extension MovieDetailVC {
     func showMovieRuntime() {
         if let runTime = self.movie.runtime {
             var content:String = ""
-            if runTime == 0 {
-                content.appendContentsOf("0")
-            } else {
+            if runTime != 0 {
                 let hour = runTime / 60
                 let min = runTime % 60
                 

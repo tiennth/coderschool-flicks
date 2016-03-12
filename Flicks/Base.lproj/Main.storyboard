@@ -119,8 +119,8 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6aq-Eq-XIB">
-                                                    <rect key="frame" x="8" y="132" width="87" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <rect key="frame" x="8" y="132" width="87" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -250,7 +250,7 @@
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Dfz-II-HHd">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.65000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7D-JN-g3D">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7D-JN-g3D">
                                 <rect key="frame" x="0.0" y="395" width="375" height="222.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oMq-tm-beR">
@@ -268,7 +268,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zsw-hi-HUK">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="talk" translatesAutoresizingMaskIntoConstraints="NO" id="zsw-hi-HUK">
                                                 <rect key="frame" x="8" y="60.5" width="31" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="31" id="R3G-84-gog"/>
@@ -281,7 +281,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O25-F8-Z6T">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hourglass" translatesAutoresizingMaskIntoConstraints="NO" id="O25-F8-Z6T">
                                                 <rect key="frame" x="126.5" y="60.5" width="31" height="23"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="31" id="m4L-l8-BvE"/>
@@ -421,9 +421,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="hourglass" width="16" height="16"/>
         <image name="icon-error" width="36" height="36"/>
         <image name="placeholder" width="186" height="276"/>
         <image name="rating-star" width="16" height="16"/>
+        <image name="talk" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Gws-9b-mhA"/>
