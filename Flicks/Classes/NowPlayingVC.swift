@@ -19,7 +19,7 @@ class NowPlayingVC: BaseVC {
     @IBOutlet weak var msgViewTitleLabel: UILabel!
     @IBOutlet weak var msgViewDescLabel: UILabel!
     
-    let segmentedControl = UISegmentedControl()
+    var endPoint:MovieEndpoint!
     
     // Navigation bar's buttons
     var leftBarButton:UIBarButtonItem!
@@ -38,7 +38,11 @@ class NowPlayingVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Now playing"
+        if self.endPoint == MovieEndpoint.NowPlaying {
+            self.title = "Now playing"
+        } else if self.endPoint == MovieEndpoint.TopRated {
+            self.title = "Top rated"
+        }
 
         // Do any additional setup after loading the view.
         self.moviesTable.dataSource = self
@@ -86,9 +90,9 @@ class NowPlayingVC: BaseVC {
     private func loadMoviesData() {
         let mbLoadingView = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         mbLoadingView.mode = MBProgressHUDMode.Indeterminate;
-        mbLoadingView.labelText = "Loading";
+        mbLoadingView.labelText = "Loading movies...";
         
-        moviesLoader.loadNowplayingMovies { (movies, error) -> Void in
+        moviesLoader.loadMovies(endPoint) { (movies, error) -> Void in
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             
             if error != nil {
@@ -136,12 +140,13 @@ class NowPlayingVC: BaseVC {
     }
     
     private func createLeftBarButton() {
-        self.segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 0, animated: false)
-        self.segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 1, animated: false)
-        self.segmentedControl.selectedSegmentIndex = 0
-        self.segmentedControl.tintColor = UIColor.redColor()
-        self.segmentedControl.addTarget(self, action: "segmentControlValueChange:", forControlEvents: .ValueChanged)
-        self.segmentedControl.sizeToFit()
+        let segmentedControl = UISegmentedControl()
+        segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 0, animated: false)
+        segmentedControl.insertSegmentWithImage(UIImage(named: "rating-star"), atIndex: 1, animated: false)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.tintColor = UIColor.redColor()
+        segmentedControl.addTarget(self, action: "segmentControlValueChange:", forControlEvents: .ValueChanged)
+        segmentedControl.sizeToFit()
         self.leftBarButton = UIBarButtonItem(customView: segmentedControl)
     }
     
@@ -194,7 +199,6 @@ class NowPlayingVC: BaseVC {
     
     @objc
     private func segmentControlValueChange(sender:UISegmentedControl) {
-        print("Selected \(sender.selectedSegmentIndex)")
         if sender.selectedSegmentIndex == 0 {
             self.moviesTable.hidden = false
             self.movieCollection.hidden = true

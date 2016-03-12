@@ -20,11 +20,17 @@ class MovieDetailVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     var movie:Movie!
+    var isAnimating = false
+    var maxDetailViewAlpha:CGFloat = 1.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "Movie"
+        
+        self.maxDetailViewAlpha = self.scrollView.alpha
+        let tapOnPosterGesture = UITapGestureRecognizer(target: self, action: "posterImageViewDidClick:")
+        self.posterImageView.addGestureRecognizer(tapOnPosterGesture)
         
         self.bindMovieToViews()
         
@@ -51,6 +57,24 @@ class MovieDetailVC: UIViewController {
     override func viewDidLayoutSubviews() {
         let overviewRect = self.overviewLabel.frame;
         self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, overviewRect.origin.y + overviewRect.size.height + 10)
+    }
+    
+    @objc
+    private func posterImageViewDidClick(sender:UIView) {
+        if self.isAnimating {
+            return
+        }
+        
+        let isHidden = self.scrollView.hidden
+        self.scrollView.hidden = false
+
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.isAnimating = true
+            self.scrollView.alpha = isHidden ? self.maxDetailViewAlpha : 0
+            }) { (finished) -> Void in
+                self.scrollView.hidden = !isHidden
+                self.isAnimating = false
+        }
     }
     
     /*

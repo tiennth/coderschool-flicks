@@ -19,14 +19,16 @@ class MoviesLoader: NSObject {
         apiKey = MoviesLoader.readApiKey()
     }
     
-    func loadNowplayingMovies(withComplete completehandler: (movies:Array<Movie>?, error:NSError?) -> Void ) {
+    func loadMovies(endPoint:MovieEndpoint, withComplete completehandler: (movies:Array<Movie>?, error:NSError?) -> Void ) {
         let unknownError = NSError(domain: kFlicksErrorDomain, code: kSomethingWentWrongErrorCode, userInfo: [NSLocalizedDescriptionKey:"Can not read API key, please check again"])
         guard let _ = self.apiKey else {
             completehandler(movies: nil, error: unknownError)
             return
         }
         
-        Alamofire.request(.GET, self.makeNowPlayingMoviesRequestURL(self.apiKey!)).responseJSON {
+        let endPointString = endPoint == MovieEndpoint.NowPlaying ? "now_playing" : "top_rated"
+        
+        Alamofire.request(.GET, self.makeMoviesRequestURL(self.apiKey!, endPoint: endPointString)).responseJSON {
             response in
             
             // If something went wrong and Alamofire can handle it
@@ -94,8 +96,8 @@ class MoviesLoader: NSObject {
     }
     
     // Create URLs utilities
-    private func makeNowPlayingMoviesRequestURL(apiKey:String) -> String {
-        return "\(BASE_API)now_playing?api_key=\(apiKey)"
+    private func makeMoviesRequestURL(apiKey:String, endPoint:String) -> String {
+        return "\(BASE_API)\(endPoint)?api_key=\(apiKey)"
     }
     
     private func makeMovieDetailRequestURL(apiKey:String, movieId:Int) -> String {
