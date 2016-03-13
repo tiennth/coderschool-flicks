@@ -27,6 +27,10 @@ extension MovieDetailVC {
         self.overviewLabel.sizeToFit()
 
         // Setup poster image.
+        guard let _ = self.movie.posterPath else {
+            return
+        }
+        
         let lowResImageUrl = NSURL(string: FlickUrlUtils.lowResolutionPosterPath(self.movie.posterPath!))!
         let highResImageUrl = NSURL(string: FlickUrlUtils.highResolutionPosterPath(self.movie.posterPath!))!
         // Do any additional setup after loading the view.
